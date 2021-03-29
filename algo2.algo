@@ -4,12 +4,11 @@ VAR
     sum:INTEGER:=0;
     sum1:INTEGER:=0;
     sum2,sum3,sum4,sum5:INTEGER:=0;
-    aux,aux1: INTEGER;
+    aux,aux1, count: INTEGER;
     htab1 : HASH_TABLE<INTEGER,INTEGER>;
-    htab2 : HASH_TABLE<INTEGER,INTEGER>;
 
 BEGIN
-//problem 1 solution1
+//problem 1 
     Read(set1)
     Read(set2)
     FOR i FROM 0 TO set1.length-1 STEP 1  DO
@@ -32,32 +31,37 @@ BEGIN
     sum=sum1+sum2;
     write("Sum of distinct elements:",sum);
 
-//problem1 solution2
-    htab1 : HASH_TABLE<INTEGER,INTEGER>;
-    htab2 : HASH_TABLE<INTEGER,INTEGER>;
-    htab1.insert(0,3);
-    htab1.insert(1,1);
-    htab1.insert(2,7);
-    htab1.insert(3,9);
-    Write(htab1);
-    htab2.insert(0,2);
-    htab2.insert(1,4);
-    htab2.insert(2,1);
-    htab2.insert(3,9);
-    htab2.insert(4,3);
-    Write(htab2);
-    WHILE (htab1.isEmpty()) DO
-    a=htab1.get(count)
-    WHILE (htab2.isEmpty()) DO
-    IF (htab2.get(j)<>a) THEN 
+//problem2
+    FOR i FROM 0 TO set1.length -1 STEP 1  DO
+        IF (htab1.lookup(set1[i]) = TRUE) THEN
+            count := htab1.get(set1[i]);
+            dict.insert(set1[i],count+1);
+        ELSE
+            dict.insert(set1[i],1);
         END_IF
-        total=total+a
-    END_WHILE
-    END_WHILE
+    END_FOR
 
+    FOR i FROM 0 TO set2.length -1 STEP 1  DO
+        IF (htab1.lookup(set2[i]) = TRUE) THEN
+            count := htab1.get(set2[i]);
+            htab1.insert(set2[i],count+1);
+        ELSE
+            htab1.insert(set2[i],1);
+        END_IF
+    END_FOR
+
+    //get sum of distinct elements
+    set_keys := htab1.getKeys();
+    FOR i FROM 0 TO set_keys.length -1 STEP 1  DO
+        IF (dict.get(set_keys[i]) = 1) THEN
+            sum := sum +set_keys[i];
+        END_IF
+    END_FOR
+
+END
 
 //problem 2 solution 1
-    Read(set1)
+ /*   Read(set1)
     Read(set2)
     FOR i FROM 0 TO set1.length-1 STEP 1  DO
     aux2=set1[i]
@@ -79,5 +83,5 @@ BEGIN
     sum5=(sum3+sum4)*2;
     write("Sum of overlapping elements:",sum5);
 
-
+*/
 END
